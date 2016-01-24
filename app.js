@@ -7,16 +7,16 @@
 var lame = require( 'lame' );
 var mumble = require( 'mumble' );
 var unique = Date.now() % 10;
-
+var http = require("http");
 var fs = require('fs');
 
 var options = {
     key: fs.readFileSync( 'cert-key.pem' ),
     cert: fs.readFileSync( 'cert-key.pem' )
-}
+};
 
-var server = http.createServer(app);
-var io = require('socket.io').listen( server );
+/*var server = http.createServer(app);
+var io = require('socket.io').listen( server );*/
 
 mumble.connect( 'mumble://192.168.99.10', options, function( error, client ) {
     if( error ) { throw new Error( error ); }
