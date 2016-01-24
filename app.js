@@ -18,9 +18,7 @@ var options = {
 var server = http.createServer(app);
 var io = require('socket.io').listen( server );
 
-
-//mumble.connect( 'mumble://192.168.99.10', options, function( error, client ) {
-mumble.connect( 'mumble://192.168.114.114', options, function( error, client ) {
+mumble.connect( 'mumble://192.168.99.10', options, function( error, client ) {
     if( error ) { throw new Error( error ); }
 
     client.authenticate('mp3-' + unique);
