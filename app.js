@@ -1,68 +1,59 @@
-"use strict";
+import lame from '@flat/lame';
+import mumble from 'mumble';
+import fs from 'fs';
 
-// Usage:
-// npm install lame
-// node mp3.js < file.mp3
+const unique = Date.now() % 10;
 
-var lame = require( 'lame' );
-var mumble = require( 'mumble' );
-var unique = Date.now() % 10;
-var http = require("http");
-var fs = require('fs');
-
-var options = {
-    key: fs.readFileSync( 'cert-key.pem' ),
-    cert: fs.readFileSync( 'cert-key.pem' )
+const options = {
+    key: fs.readFileSync('cert-key.pem'),
+    cert: fs.readFileSync('cert-key.pem')
 };
 
-/*var server = http.createServer(app);
-var io = require('socket.io').listen( server );*/
+mumble.connect('mumble://192.168.99.10', options, (error, client) => {
+    if (error) {
+        throw new Error(error);
+    }
 
-mumble.connect( 'mumble://192.168.99.10', options, function( error, client ) {
-    if( error ) { throw new Error( error ); }
-
-    client.authenticate('mp3-' + unique);
-    client.on( 'initialized', function() {
+    client.authenticate(`mp3-${unique}`);
+    client.on('initialized', () => {
         //start( client );
-        var user = client.userById(0);
+        const user = client.userById(0);
         start1(user)
         //user.outputStream().pipe( user.inputStream() );
     });
 });
 
-var start1 = function( client ) {
+var start1 = client => {
+    const decoder = new lame.Decoder();
 
-    var decoder = new lame.Decoder();
+    let stream;
+    decoder.on('format', format => {
+        console.log(format);
 
-    var stream;
-    decoder.on( 'format', function( format ) {
-        console.log( format );
-
-        stream.pipe( client.inputStream({
+        stream.pipe(client.inputStream({
             channels: format.channels,
             sampleRate: format.sampleRate,
             gain: 0.25
         }));
     });
 
-    stream = process.stdin.pipe( decoder );
+    stream = process.stdin.pipe(decoder);
 };
 
-var start = function( client ) {
+const start = client => {
+    const input = client.inputStream();
+    const decoder = new lame.Decoder();
 
-    var input = client.inputStream();
-    var decoder = new lame.Decoder();
+    let stream;
+    decoder.on('format', format => {
+        console.log(format);
 
-    var stream;
-    decoder.on( 'format', function( format ) {
-        console.log( format );
-
-        stream.pipe( client.inputStream({
+        stream.pipe(client.inputStream({
             channels: format.channels,
             sampleRate: format.sampleRate,
             gain: 0.25
         }));
     });
 
-    stream = process.stdin.pipe( decoder );
+    stream = process.stdin.pipe(decoder);
 };
