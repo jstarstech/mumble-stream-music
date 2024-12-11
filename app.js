@@ -11,7 +11,9 @@ const options = {
 
 mumble.connect('mumble://192.168.99.10', options, (error, client) => {
     if (error) {
-        throw new Error(error);
+        console.error('Connection error:', error);
+        
+        process.exit(1);
     }
 
     client.authenticate(`mp3-${unique}`);
