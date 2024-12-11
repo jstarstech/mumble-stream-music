@@ -5,7 +5,7 @@
   "main": "app.js",
   "type": "module",
   "dependencies": {
-    "@flat/lame": "^1.2.6",
+    "@flat/lame": "^1.2.8",
     "binaryjs": "~0.2.1",
     "mumble": "github:tazfrison/node-mumble"
   },
