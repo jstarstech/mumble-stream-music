@@ -26,7 +26,8 @@ mumble.connect('mumble://192.168.99.10', options, (error, client) => {
 var start1 = client => {
     const decoder = new lame.Decoder();
 
-    let stream;
+    const stream = process.stdin.pipe(decoder);
+
     decoder.on('format', format => {
         console.log(format);
 
@@ -36,15 +37,14 @@ var start1 = client => {
             gain: 0.25
         }));
     });
-
-    stream = process.stdin.pipe(decoder);
 };
 
 const start = client => {
     const input = client.inputStream();
     const decoder = new lame.Decoder();
 
-    let stream;
+    const stream = process.stdin.pipe(decoder);
+
     decoder.on('format', format => {
         console.log(format);
 
@@ -54,6 +54,4 @@ const start = client => {
             gain: 0.25
         }));
     });
-
-    stream = process.stdin.pipe(decoder);
 };
