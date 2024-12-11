@@ -1,6 +1,6 @@
 import lame from '@flat/lame';
 import mumble from 'mumble';
-import fs from 'fs';
+import fs from 'node:fs';
 
 const unique = Date.now() % 10;
 
