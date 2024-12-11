@@ -18,8 +18,8 @@ mumble.connect('mumble://192.168.99.10', options, (error, client) => {
 
     client.authenticate(`mp3-${unique}`);
     client.on('initialized', () => {
-        //start( client );
         const user = client.userById(0);
+        
         start1(user)
         //user.outputStream().pipe( user.inputStream() );
     });
