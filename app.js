@@ -38,20 +38,3 @@ var start1 = client => {
         }));
     });
 };
-
-const start = client => {
-    const input = client.inputStream();
-    const decoder = new lame.Decoder();
-
-    const stream = process.stdin.pipe(decoder);
-
-    decoder.on('format', format => {
-        console.log(format);
-
-        stream.pipe(client.inputStream({
-            channels: format.channels,
-            sampleRate: format.sampleRate,
-            gain: 0.25
-        }));
-    });
-};
