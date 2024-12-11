@@ -19,13 +19,13 @@ mumble.connect('mumble://192.168.99.10', options, (error, client) => {
     client.authenticate(`mp3-${unique}`);
     client.on('initialized', () => {
         const user = client.userById(0);
-        
-        start1(user)
+
+        startStream(user)
         //user.outputStream().pipe( user.inputStream() );
     });
 });
 
-var start1 = client => {
+var startStream = client => {
     const decoder = new lame.Decoder();
 
     const stream = process.stdin.pipe(decoder);
