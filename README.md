@@ -24,8 +24,12 @@ This project is a Mumble client that streams music using Node.js.
     ```sh
     npm install
     ```
+3. Copy the `.env.example` file to `.env` and set the `MUMBLE_URL` environment variable:
+    ```sh
+    cp .env.example .env
+    ```
 
-3. Ensure you have `cert-key.pem` in the project directory.
+4. Ensure you have `cert-key.pem` in the project directory.
 
 ## Usage
 

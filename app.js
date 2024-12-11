@@ -1,6 +1,9 @@
 import lame from '@flat/lame';
 import mumble from 'mumble';
 import fs from 'node:fs';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const unique = Date.now() % 10;
 
@@ -8,8 +11,14 @@ const options = {
     key: fs.readFileSync('cert-key.pem'),
     cert: fs.readFileSync('cert-key.pem')
 };
+if (!process.env.MUMBLE_URL) {
+    console.error('Environment variable MUMBLE_URL is not set. Please ensure it is set before running the application.');
+    process.exit(1);
+}
 
-mumble.connect('mumble://192.168.99.10', options, (error, client) => {
+const mumbleUrl = process.env.MUMBLE_URL;
+
+mumble.connect(mumbleUrl, options, (error, client) => {
     if (error) {
         console.error('Connection error:', error);
         
