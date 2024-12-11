@@ -12,7 +12,9 @@ const options = {
     cert: fs.readFileSync('cert-key.pem')
 };
 if (!process.env.MUMBLE_URL) {
-    console.error('Environment variable MUMBLE_URL is not set. Please ensure it is set before running the application.');
+    console.error(
+        'Environment variable MUMBLE_URL is not set. Please ensure it is set before running the application.'
+    );
     process.exit(1);
 }
 
@@ -21,7 +23,7 @@ const mumbleUrl = process.env.MUMBLE_URL;
 mumble.connect(mumbleUrl, options, (error, client) => {
     if (error) {
         console.error('Connection error:', error);
-        
+
         process.exit(1);
     }
 
@@ -29,7 +31,7 @@ mumble.connect(mumbleUrl, options, (error, client) => {
     client.on('initialized', () => {
         const user = client.userById(0);
 
-        startStream(user)
+        startStream(user);
         //user.outputStream().pipe( user.inputStream() );
     });
 });
@@ -42,10 +44,12 @@ var startStream = client => {
     decoder.on('format', format => {
         console.log(format);
 
-        stream.pipe(client.inputStream({
-            channels: format.channels,
-            sampleRate: format.sampleRate,
-            gain: 0.25
-        }));
+        stream.pipe(
+            client.inputStream({
+                channels: format.channels,
+                sampleRate: format.sampleRate,
+                gain: 0.25
+            })
+        );
     });
 };
