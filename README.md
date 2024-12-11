@@ -7,6 +7,10 @@ This project is a Mumble client that streams music using Node.js.
 - Node.js (v14 or higher)
 - npm (v6 or higher)
 - A Mumble server
+- Build tools for compiling native addons:
+    ```sh
+    sudo apt-get install build-essential
+    ```
 
 ## Installation
 
