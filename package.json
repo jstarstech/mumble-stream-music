@@ -1,7 +1,7 @@
 {
-  "name": "mumblecl",
+  "name": "mumble-stream-music",
   "version": "0.0.0",
-  "description": "mumblecl",
+  "description": "Mumble client to stream music",
   "main": "app.js",
   "type": "module",
   "dependencies": {
