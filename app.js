@@ -41,15 +41,27 @@ var startStream = client => {
 
     const stream = process.stdin.pipe(decoder);
 
+    process.stdin.on('error', error => {
+        console.error('stdin error:', error);
+    });
+
+    decoder.on('error', error => {
+        console.error('MP3 decode error:', error);
+    });
+
     decoder.on('format', format => {
         console.log(format);
 
-        stream.pipe(
-            client.inputStream({
-                channels: format.channels,
-                sampleRate: format.sampleRate,
-                gain: 0.25
-            })
-        );
+        const input = client.inputStream({
+            channels: format.channels,
+            sampleRate: format.sampleRate,
+            gain: 0.25
+        });
+
+        input.on('error', error => {
+            console.error('Mumble input stream error:', error);
+        });
+
+        stream.pipe(input);
     });
 };
