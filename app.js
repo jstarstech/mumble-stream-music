@@ -7,9 +7,21 @@ dotenv.config();
 
 const unique = Date.now() % 10;
 
+// cert-key.pem is a combined PEM bundle containing both the private key
+// and the certificate blocks, so the same file feeds key and cert.
+let pem;
+try {
+    pem = fs.readFileSync('cert-key.pem');
+} catch (error) {
+    console.error(
+        `Could not read 'cert-key.pem'. Please ensure the combined certificate/key file exists in the project directory. (${error.message})`
+    );
+    process.exit(1);
+}
+
 const options = {
-    key: fs.readFileSync('cert-key.pem'),
-    cert: fs.readFileSync('cert-key.pem')
+    key: pem,
+    cert: pem
 };
 if (!process.env.MUMBLE_URL) {
     console.error(
